@@ -11,6 +11,9 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+// firebase storage
+var db = firebase.firestore();
+
 // Provider Google
 var provider = new firebase.auth.GoogleAuthProvider();
 
@@ -19,7 +22,6 @@ firebase.auth().onAuthStateChanged(function (user) {
         var email = user.email;
         console.log(email + "signed in");
         $("#content")[0].load("foodcategory.html");
-        $("#sidemenu")[0].close();
         // User is signed in.
         /*
         var displayName = user.displayName;
@@ -42,6 +44,40 @@ firebase.auth().onAuthStateChanged(function (user) {
 document.addEventListener('init', function (event) {
     var page = event.target;
     console.log(page.id);
+
+    if (page.id === 'foodcategory') {
+        db.collection("recommended").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                var item = `
+                <ons-carousel-item modifier="nodivider" id="${doc.data().id}" class="recommended_item">
+        <div class="thumbnail" style="background-repeat: no-repeat;
+        background-size: 100px auto; background-position: center; background-color: rgba(255, 255, 255, 255); background-image: url('${doc.data().photoUrl}')">
+        </div>
+        <div class="recommended_item_title" id="item1_name">${doc.data().name}</div>
+        </ons-carousel-item>
+        `;
+                $("#recomcarousel").append(item);
+            });
+        });
+    }
+
+    if (page.id === "restaurantlist") {
+        db.collection("restaurantList").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                var item = `
+                <ons-card>
+                <img src="${doc.data().photoUrl}" alt="DunkinDonuts" style="width: 100%">
+                <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
+                <div class="card__content">somthing information like,<br>maybe number or food.</div>
+                <div style="text-align: right">
+                    <ons-button>Select</ons-button>
+                </div>
+            </ons-card>
+                `;
+                $("#rescarousel").append(item);
+            });
+        });
+    }
 
     if (page.id === "tabbar") {
         //Code for tabbar
@@ -78,13 +114,13 @@ document.addEventListener('init', function (event) {
         $("#listbtn").click(function () {
             var content = document.getElementById('content');
             var menu = document.getElementById('menu');
-            content.load('resturantlist.html')
+            content.load('restaurantlist.html')
                 .then(menu.close.bind(menu));
         });
         $("#menubtn").click(function () {
             var content = document.getElementById('content');
             var menu = document.getElementById('menu');
-            content.load('resturantmenu.html')
+            content.load('restaurantmenu.html')
                 .then(menu.close.bind(menu));
         });
         $("#conbtn").click(function () {
@@ -151,7 +187,6 @@ document.addEventListener('init', function (event) {
                 });
                 // [END authwithemail]
             }
-            document.getElementById('quickstart-sign-in').disabled = true;
         });
     }
 
