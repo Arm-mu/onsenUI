@@ -45,6 +45,60 @@ document.addEventListener('init', function (event) {
     var page = event.target;
     console.log(page.id);
 
+    if (page.id === "restauranticecream") {
+        db.collection("restaurantIcecream").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                var item = `
+                <ons-card>
+                <img src="${doc.data().photoUrl}" alt="DunkinDonuts" style="width: 100%">
+                <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
+                <div class="card__content">somthing information like,<br>maybe number or food.</div>
+                <div style="text-align: right">
+                    <ons-button>Select</ons-button>
+                </div>
+            </ons-card>
+                `;
+                $("#resicecreamcarousel").append(item);
+            });
+        });
+    }
+
+    if (page.id === "restaurantcake") {
+        db.collection("restaurantCake").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                var item = `
+                <ons-card>
+                <img src="${doc.data().photoUrl}" alt="DunkinDonuts" style="width: 100%">
+                <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
+                <div class="card__content">somthing information like,<br>maybe number or food.</div>
+                <div style="text-align: right">
+                    <ons-button>Select</ons-button>
+                </div>
+            </ons-card>
+                `;
+                $("#rescakecarousel").append(item);
+            });
+        });
+    }
+
+    if (page.id === "restaurantbread") {
+        db.collection("restaurantBread").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                var item = `
+                <ons-card>
+                <img src="${doc.data().photoUrl}" alt="DunkinDonuts" style="width: 100%">
+                <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
+                <div class="card__content">somthing information like,<br>maybe number or food.</div>
+                <div style="text-align: right">
+                    <ons-button>Select</ons-button>
+                </div>
+            </ons-card>
+                `;
+                $("#resbreadcarousel").append(item);
+            });
+        });
+    }
+
     if (page.id === 'foodcategory') {
         db.collection("recommended").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -58,6 +112,25 @@ document.addEventListener('init', function (event) {
         `;
                 $("#recomcarousel").append(item);
             });
+        });
+
+        $("#icecreamcatebtn").click(function () {
+            var content = document.getElementById('content');
+            var menu = document.getElementById('menu');
+            content.load('restauranticecream.html')
+                .then(menu.close.bind(menu));
+        });
+        $("#cakecatebtn").click(function () {
+            var content = document.getElementById('content');
+            var menu = document.getElementById('menu');
+            content.load('restaurantcake.html')
+                .then(menu.close.bind(menu));
+        });
+        $("#breadcatebtn").click(function () {
+            var content = document.getElementById('content');
+            var menu = document.getElementById('menu');
+            content.load('restaurantbread.html')
+                .then(menu.close.bind(menu));
         });
     }
 
