@@ -17,6 +17,16 @@ var db = firebase.firestore();
 // Provider Google
 var provider = new firebase.auth.GoogleAuthProvider();
 
+// Total order price
+var total = 0;
+var foodlist = [];
+function buy(price, name) {
+    foodlist.push([price, name]);
+    total = total + price;
+    console.log(total);
+    
+}
+
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         var email = user.email;
@@ -45,17 +55,14 @@ document.addEventListener('init', function (event) {
     var page = event.target;
     console.log(page.id);
 
-    if (page.id === "swenMenu") {
-        
-        $("#chocobuc").click(function() {
-            var val = $("#chocobuc").val()
-            console.log(val);
-            console.log("Clicked!");
-            
-            
+    if (page.id === "orderconfirm") {
+        foodlist.forEach((foodlist, index) => {
+        list = `<ons-list-item style="background-color: silver">${foodlist[1]}<br>> ${foodlist[0]} ฿</ons-list-item>`;
+        $('#orderlist').append(list);
         });
+        $('#ordertotal').append(total+" ฿");
     }
-    
+
     if (page.id === "restauranticecream") {
         db.collection("restaurantIcecream").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -383,22 +390,3 @@ document.addEventListener('init', function (event) {
         });
     }
 });
-
-//Swensen's Menu value
-var chocobuc = function(chocobucvalue){
-    console.log(chocobucvalue);
-}
-var vanibuc = function(vanibucvalue){
-    console.log(vanibucvalue);
-}
-var cncbuc = function(cncbucvalue){
-    console.log(cncbucvalue);
-}
-var matbuc = function(matbucvalue){
-    console.log(matbucvalue);
-}
-
-/*var value = 120
-var button = ` <ons-button  onclick="hey(),hoo(${value})">
-+
-</ons-button>`;*/
