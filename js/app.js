@@ -50,15 +50,27 @@ document.addEventListener('init', function (event) {
             querySnapshot.forEach((doc) => {
                 var item = `
                 <ons-card>
-                <img src="${doc.data().photoUrl}" alt="DunkinDonuts" style="width: 100%">
+                <img src="${doc.data().photoUrl}" style="width: 100%">
                 <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
                 <div class="card__content">somthing information like,<br>maybe number or food.</div>
                 <div style="text-align: right">
-                    <ons-button>Select</ons-button>
+                    <ons-button id="${doc.data().btn}" >Select</ons-button>
                 </div>
             </ons-card>
                 `;
                 $("#resicecreamcarousel").append(item);
+                $("#swenbtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('swenMenu.html')
+                        .then(menu.close.bind(menu));
+                });
+                $("#dailybtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('dailyMenu.html')
+                        .then(menu.close.bind(menu));
+                });
             });
         });
     }
@@ -68,15 +80,27 @@ document.addEventListener('init', function (event) {
             querySnapshot.forEach((doc) => {
                 var item = `
                 <ons-card>
-                <img src="${doc.data().photoUrl}" alt="DunkinDonuts" style="width: 100%">
+                <img src="${doc.data().photoUrl}" style="width: 100%">
                 <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
                 <div class="card__content">somthing information like,<br>maybe number or food.</div>
                 <div style="text-align: right">
-                    <ons-button>Select</ons-button>
+                    <ons-button id="${doc.data().btn}">Select</ons-button>
                 </div>
             </ons-card>
                 `;
                 $("#rescakecarousel").append(item);
+                $("#krispybtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('krispyMenu.html')
+                        .then(menu.close.bind(menu));
+                });
+                $("#happybtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('happyMenu.html')
+                        .then(menu.close.bind(menu));
+                });
             });
         });
     }
@@ -86,15 +110,33 @@ document.addEventListener('init', function (event) {
             querySnapshot.forEach((doc) => {
                 var item = `
                 <ons-card>
-                <img src="${doc.data().photoUrl}" alt="DunkinDonuts" style="width: 100%">
+                <img src="${doc.data().photoUrl}" style="width: 100%">
                 <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
                 <div class="card__content">somthing information like,<br>maybe number or food.</div>
                 <div style="text-align: right">
-                    <ons-button>Select</ons-button>
+                    <ons-button id="${doc.data().btn}">Select</ons-button>
                 </div>
             </ons-card>
                 `;
                 $("#resbreadcarousel").append(item);
+                $("#misterbtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('misterMenu.html')
+                        .then(menu.close.bind(menu));
+                });
+                $("#dunkinbtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('dunkinMenu.html')
+                        .then(menu.close.bind(menu));
+                });
+                $("#breadtalkbtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('breadtalkMenu.html')
+                        .then(menu.close.bind(menu));
+                });
             });
         });
     }
@@ -139,15 +181,58 @@ document.addEventListener('init', function (event) {
             querySnapshot.forEach((doc) => {
                 var item = `
                 <ons-card>
-                <img src="${doc.data().photoUrl}" alt="DunkinDonuts" style="width: 100%">
+                <img src="${doc.data().photoUrl}" style="width: 100%">
                 <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
                 <div class="card__content">somthing information like,<br>maybe number or food.</div>
                 <div style="text-align: right">
-                    <ons-button>Select</ons-button>
+                    <ons-button id="${doc.data().btn}">Select</ons-button>
                 </div>
             </ons-card>
                 `;
                 $("#rescarousel").append(item);
+                $("#misterbtn").click(function () {
+                    console.log('work?');
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('misterMenu.html')
+                        .then(menu.close.bind(menu));
+                });
+                $("#dunkinbtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('dunkinMenu.html')
+                        .then(menu.close.bind(menu));
+                });
+                $("#breadtalkbtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('breadtalkMenu.html')
+                        .then(menu.close.bind(menu));
+                });
+                $("#krispybtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('krispyMenu.html')
+                        .then(menu.close.bind(menu));
+                });
+                $("#happybtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('happyMenu.html')
+                        .then(menu.close.bind(menu));
+                });
+                $("#swenbtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('swenMenu.html')
+                        .then(menu.close.bind(menu));
+                });
+                $("#dailybtn").click(function () {
+                    var content = document.getElementById('content');
+                    var menu = document.getElementById('menu');
+                    content.load('dailyMenu.html')
+                        .then(menu.close.bind(menu));
+                });
             });
         });
     }
@@ -190,18 +275,12 @@ document.addEventListener('init', function (event) {
             content.load('restaurantlist.html')
                 .then(menu.close.bind(menu));
         });
-        $("#menubtn").click(function () {
-            var content = document.getElementById('content');
-            var menu = document.getElementById('menu');
-            content.load('restaurantmenu.html')
-                .then(menu.close.bind(menu));
-        });
-        $("#conbtn").click(function () {
+        /*$("#conbtn").click(function () {
             var content = document.getElementById('content');
             var menu = document.getElementById('menu');
             content.load('orderconfirm.html')
                 .then(menu.close.bind(menu));
-        });
+        });*/
     }
 
     if (page.id === 'tab1') {
