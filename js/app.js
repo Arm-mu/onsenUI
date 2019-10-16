@@ -45,6 +45,17 @@ document.addEventListener('init', function (event) {
     var page = event.target;
     console.log(page.id);
 
+    if (page.id === "swenMenu") {
+        
+        $("#chocobuc").click(function() {
+            var val = $("#chocobuc").val()
+            console.log(val);
+            console.log("Clicked!");
+            
+            
+        });
+    }
+    
     if (page.id === "restauranticecream") {
         db.collection("restaurantIcecream").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -275,12 +286,12 @@ document.addEventListener('init', function (event) {
             content.load('restaurantlist.html')
                 .then(menu.close.bind(menu));
         });
-        /*$("#conbtn").click(function () {
+        $("#conbtn").click(function () {
             var content = document.getElementById('content');
             var menu = document.getElementById('menu');
             content.load('orderconfirm.html')
                 .then(menu.close.bind(menu));
-        });*/
+        });
     }
 
     if (page.id === 'tab1') {
@@ -372,3 +383,22 @@ document.addEventListener('init', function (event) {
         });
     }
 });
+
+//Swensen's Menu value
+var chocobuc = function(chocobucvalue){
+    console.log(chocobucvalue);
+}
+var vanibuc = function(vanibucvalue){
+    console.log(vanibucvalue);
+}
+var cncbuc = function(cncbucvalue){
+    console.log(cncbucvalue);
+}
+var matbuc = function(matbucvalue){
+    console.log(matbucvalue);
+}
+
+/*var value = 120
+var button = ` <ons-button  onclick="hey(),hoo(${value})">
++
+</ons-button>`;*/
