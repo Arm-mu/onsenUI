@@ -24,7 +24,7 @@ function buy(price, name) {
     foodlist.push([price, name]);
     total = total + price;
     console.log(total);
-    
+
 }
 
 firebase.auth().onAuthStateChanged(function (user) {
@@ -57,10 +57,10 @@ document.addEventListener('init', function (event) {
 
     if (page.id === "orderconfirm") {
         foodlist.forEach((foodlist, index) => {
-        list = `<ons-list-item style="background-color: silver">${foodlist[1]}<br>> ${foodlist[0]} ฿</ons-list-item>`;
-        $('#orderlist').append(list);
+            list = `<ons-list-item style="background-color: silver">${foodlist[1]}<br>> ${foodlist[0]} ฿</ons-list-item>`;
+            $('#orderlist').append(list);
         });
-        $('#ordertotal').append(total+" ฿");
+        $('#ordertotal').append(total + " ฿");
     }
 
     if (page.id === "restauranticecream") {
@@ -198,12 +198,12 @@ document.addEventListener('init', function (event) {
         db.collection("restaurantList").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 var item = `
-                <ons-card>
+                <ons-card  >
                 <img src="${doc.data().photoUrl}" style="width: 100%">
                 <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
                 <div class="card__content">somthing information like,<br>maybe number or food.</div>
                 <div style="text-align: right">
-                    <ons-button id="${doc.data().btn}">Select</ons-button>
+                 <ons-button onclick="gotoMenu('${doc.id}')">Select</ons-button>
                 </div>
             </ons-card>
                 `;
@@ -389,4 +389,71 @@ document.addEventListener('init', function (event) {
             });
         });
     }
+
+    if (page.id === "menulist") {
+        var resId = page.data.resId
+        console.log(resId);
+        var rest = db.collection("restaurantList").doc(resId);
+
+        rest.get().then(function (doc) {
+            if (doc.exists) {
+                $("#foods").empty()
+                
+                console.log("Document data:", doc.data());
+                var restaurant = doc.data();
+                var photoUrl = restaurant.photoUrl;
+                var menulist = restaurant.menulist;
+                $("#respic").attr('src',photoUrl)
+                for (var i = 0; i < menulist.length; i++) {
+                    var ons_foods = ""
+                    var cate = menulist[i];
+                    var catname = cate.foodcatname;
+                    var foods = cate.foodmenus;
+                    for (var j = 0; j < foods.length; j++) {
+                        var food = foods[j];
+                        var foodname = food.name;
+                        var foodprice = food.price;
+                        ons_foods +=`
+                        <ons-list-item style="background-color: orange">
+                            ${foodname}<br>> ${foodprice} ฿
+                            <p class="right" onclick="buy(${foodprice}, '${foodname}')">
+                                <ons-button>
+                                    +
+                                </ons-button>
+                            </p>
+                        </ons-list-item>
+                    `
+                    }
+                    var ons_list = `<ons-list >
+                    <ons-list-item expandable>
+                        <h1>
+                            <span >${catname}</span>
+                        </h1><div class="expandable-content">
+                        ${ons_foods}</div>
+                    </ons-list-item>
+                </ons-list>`
+                $("#foods").append(ons_list);
+                }
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch(function (error) {
+            console.log("Error getting document:", error);
+        });
+
+    }
 });
+var myNavigator = document.getElementById('myNavigator');
+var gotoMenu = function (id) {
+    console.log(id);
+    myNavigator
+        .pushPage('menulist.html', {
+            data: {
+                resId: id
+                // ...
+            }
+            // Other options
+        });
+
+}
