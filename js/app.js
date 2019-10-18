@@ -63,102 +63,6 @@ document.addEventListener('init', function (event) {
         $('#ordertotal').append(total + " ฿");
     }
 
-    if (page.id === "restauranticecream") {
-        db.collection("restaurantIcecream").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                var item = `
-                <ons-card>
-                <img src="${doc.data().photoUrl}" style="width: 100%">
-                <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
-                <div class="card__content">somthing information like,<br>maybe number or food.</div>
-                <div style="text-align: right">
-                    <ons-button id="${doc.data().btn}" >Select</ons-button>
-                </div>
-            </ons-card>
-                `;
-                $("#resicecreamcarousel").append(item);
-                $("#swenbtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('swenMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-                $("#dailybtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('dailyMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-            });
-        });
-    }
-
-    if (page.id === "restaurantcake") {
-        db.collection("restaurantCake").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                var item = `
-                <ons-card>
-                <img src="${doc.data().photoUrl}" style="width: 100%">
-                <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
-                <div class="card__content">somthing information like,<br>maybe number or food.</div>
-                <div style="text-align: right">
-                    <ons-button id="${doc.data().btn}">Select</ons-button>
-                </div>
-            </ons-card>
-                `;
-                $("#rescakecarousel").append(item);
-                $("#krispybtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('krispyMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-                $("#happybtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('happyMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-            });
-        });
-    }
-
-    if (page.id === "restaurantbread") {
-        db.collection("restaurantBread").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                var item = `
-                <ons-card>
-                <img src="${doc.data().photoUrl}" style="width: 100%">
-                <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
-                <div class="card__content">somthing information like,<br>maybe number or food.</div>
-                <div style="text-align: right">
-                    <ons-button id="${doc.data().btn}">Select</ons-button>
-                </div>
-            </ons-card>
-                `;
-                $("#resbreadcarousel").append(item);
-                $("#misterbtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('misterMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-                $("#dunkinbtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('dunkinMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-                $("#breadtalkbtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('breadtalkMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-            });
-        });
-    }
-
     if (page.id === 'foodcategory') {
         db.collection("recommended").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -172,25 +76,6 @@ document.addEventListener('init', function (event) {
         `;
                 $("#recomcarousel").append(item);
             });
-        });
-
-        $("#icecreamcatebtn").click(function () {
-            var content = document.getElementById('content');
-            var menu = document.getElementById('menu');
-            content.load('restauranticecream.html')
-                .then(menu.close.bind(menu));
-        });
-        $("#cakecatebtn").click(function () {
-            var content = document.getElementById('content');
-            var menu = document.getElementById('menu');
-            content.load('restaurantcake.html')
-                .then(menu.close.bind(menu));
-        });
-        $("#breadcatebtn").click(function () {
-            var content = document.getElementById('content');
-            var menu = document.getElementById('menu');
-            content.load('restaurantbread.html')
-                .then(menu.close.bind(menu));
         });
     }
 
@@ -209,7 +94,6 @@ document.addEventListener('init', function (event) {
                 `;
                 $("#rescarousel").append(item);
                 $("#misterbtn").click(function () {
-                    console.log('work?');
                     var content = document.getElementById('content');
                     var menu = document.getElementById('menu');
                     content.load('misterMenu.html')
@@ -398,12 +282,12 @@ document.addEventListener('init', function (event) {
         rest.get().then(function (doc) {
             if (doc.exists) {
                 $("#foods").empty()
-                
+
                 console.log("Document data:", doc.data());
                 var restaurant = doc.data();
                 var photoUrl = restaurant.photoUrl;
                 var menulist = restaurant.menulist;
-                $("#respic").attr('src',photoUrl)
+                $("#respic").attr('src', photoUrl)
                 for (var i = 0; i < menulist.length; i++) {
                     var ons_foods = ""
                     var cate = menulist[i];
@@ -413,7 +297,7 @@ document.addEventListener('init', function (event) {
                         var food = foods[j];
                         var foodname = food.name;
                         var foodprice = food.price;
-                        ons_foods +=`
+                        ons_foods += `
                         <ons-list-item style="background-color: orange">
                             ${foodname}<br>> ${foodprice} ฿
                             <p class="right" onclick="buy(${foodprice}, '${foodname}')">
@@ -432,7 +316,7 @@ document.addEventListener('init', function (event) {
                         ${ons_foods}</div>
                     </ons-list-item>
                 </ons-list>`
-                $("#foods").append(ons_list);
+                    $("#foods").append(ons_list);
                 }
             } else {
                 // doc.data() will be undefined in this case
