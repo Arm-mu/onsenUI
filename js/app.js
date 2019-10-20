@@ -31,7 +31,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         var email = user.email;
         console.log(email + "signed in");
-        $("#content")[0].load("foodcategory.html");
+        $("#content")[0].load("home.html");
         // User is signed in.
         /*
         var displayName = user.displayName;
@@ -63,7 +63,19 @@ document.addEventListener('init', function (event) {
         $('#ordertotal').append(total + " ฿");
     }
 
-    if (page.id === 'foodcategory') {
+    if (page.id === 'home') {
+        $("#icecreamcatebtn").click(function () {
+            localStorage.setItem("selectedCategory", "icecream");
+            $("#content")[0].load("category.html");
+        });
+        $("#cakecatebtn").click(function () {
+            localStorage.setItem("selectedCategory", "cake");
+            $("#content")[0].load("category.html");
+        });
+        $("#breadcatebtn").click(function () {
+            localStorage.setItem("selectedCategory", "bread");
+            $("#content")[0].load("category.html");
+        });
         db.collection("recommended").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 var item = `
@@ -77,6 +89,29 @@ document.addEventListener('init', function (event) {
                 $("#recomcarousel").append(item);
             });
         });
+    }
+
+    if (page.id === 'categoryPage') {
+        var category = localStorage.getItem("selectedCategory");
+        console.log("categpryPage:" + category);
+        $("#rescatcarousel").empty();
+        db.collection("restaurantList").where("category", "==", category).get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    var item = `
+                    <ons-card  >
+                    <img src="${doc.data().photoUrl}" style="width: 100%">
+                    <h2 class="card__title" style="font-weight: bold">${doc.data().name}</h2>
+                    <div class="card__content">somthing information like,<br>maybe number or food.</div>
+                    <div style="text-align: right">
+                     <ons-button onclick="gotoMenu('${doc.id}')">Select</ons-button>
+                    </div>
+                    </ons-card>
+                                `
+                    $("#rescatcarousel").append(item);
+                    console.log(doc.data().name);
+                });
+            });
     }
 
     if (page.id === "restaurantlist") {
@@ -93,48 +128,6 @@ document.addEventListener('init', function (event) {
             </ons-card>
                 `;
                 $("#rescarousel").append(item);
-                $("#misterbtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('misterMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-                $("#dunkinbtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('dunkinMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-                $("#breadtalkbtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('breadtalkMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-                $("#krispybtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('krispyMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-                $("#happybtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('happyMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-                $("#swenbtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('swenMenu.html')
-                        .then(menu.close.bind(menu));
-                });
-                $("#dailybtn").click(function () {
-                    var content = document.getElementById('content');
-                    var menu = document.getElementById('menu');
-                    content.load('dailyMenu.html')
-                        .then(menu.close.bind(menu));
-                });
             });
         });
     }
@@ -168,7 +161,7 @@ document.addEventListener('init', function (event) {
         $("#categorybtn").click(function () {
             var content = document.getElementById('content');
             var menu = document.getElementById('menu');
-            content.load('foodcategory.html')
+            content.load('home.html')
                 .then(menu.close.bind(menu));
         });
         $("#listbtn").click(function () {
