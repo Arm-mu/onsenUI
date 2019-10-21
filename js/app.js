@@ -21,10 +21,18 @@ var provider = new firebase.auth.GoogleAuthProvider();
 var total = 0;
 var foodlist = [];
 function buy(price, name) {
-    foodlist.push([price, name]);
-    total = total + price;
-    console.log(total);
-
+    // Current user
+    var user = firebase.auth().currentUser;
+    console.log(user);
+    if (!user) {
+        alert('Please sign in to order');
+        return;
+    } else {
+        alert('Order confirm !');
+        foodlist.push([price, name]);
+        total = total + price;
+        console.log(total);
+    }
 }
 
 firebase.auth().onAuthStateChanged(function (user) {
@@ -271,11 +279,9 @@ document.addEventListener('init', function (event) {
         var resId = page.data.resId
         console.log(resId);
         var rest = db.collection("restaurantList").doc(resId);
-
         rest.get().then(function (doc) {
             if (doc.exists) {
                 $("#foods").empty()
-
                 console.log("Document data:", doc.data());
                 var restaurant = doc.data();
                 var photoUrl = restaurant.photoUrl;
